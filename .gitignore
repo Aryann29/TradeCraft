@@ -45,7 +45,8 @@ develop-eggs/
 downloads/
 eggs/
 .eggs/
-lib/
+lib/*
+!lib/utils.js
 lib64/
 parts/
 sdist/
