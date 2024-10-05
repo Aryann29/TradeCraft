@@ -1,3 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import HttpResponse
 
-# Create your views here.
+def notfound(request):
+    return HttpResponse('Hi TradeCraft here, Backend Working')
