@@ -1,15 +1,19 @@
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+
+import Navbar from './components/layout/Navbar'
+import HomePage from './pages/HomePage'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <h1 className="text-3xl text-center font-bold  text-purple-400">
-     <Button>TradeCraft</Button>
-   
-  </h1>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage/>} />
+      
+        </Routes>
+      </div>
+    </Router>
   )
 }
 
