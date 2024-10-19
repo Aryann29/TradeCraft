@@ -12,9 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function Navbar() {
   const [theme, setTheme] = useState('light');
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -34,94 +36,103 @@ export default function Navbar() {
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 
+  const ThemeToggle = () => (
+    <div className="flex items-center space-x-2">
+      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Switch
+        checked={theme === 'dark'}
+        onCheckedChange={toggleTheme}
+        aria-label="Toggle theme"
+      />
+      <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+    </div>
+  );
+
   return (
     <header className="border-b bg-background">
       <div className="container mx-auto flex h-16 items-center px-4">
-
-    
-
         <Link to="/" className="flex items-center gap-2 font-semibold">
-          {/* <div className="left flex items-center gap-3 text-black">
-    <svg stroke="currentColor" fill="currentColor" viewBox="0 0 448 512" height="30px" width="30px" xmlns="http://www.w3.org/2000/svg">
-        <path d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 96h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H368c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48z"></path>
-    </svg>
-    <h1 className="text-xl font-bold">TradeCraft</h1>
-</div> */}
           <BarChart2 className="h-6 w-6" />
           <span className="hidden sm:inline-block">TradeCraft</span>
         </Link>
-        
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="ml-auto md:hidden">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right">
-            <nav className="flex flex-col gap-4">
-              <Link to="/dashboard" className="flex items-center gap-2 text-lg font-medium">
-                <BarChart2 className="h-5 w-5" />
-                Dashboard
+
+        {isLoggedIn ? (
+          <>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="ml-auto md:hidden">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Toggle navigation menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <nav className="flex flex-col gap-4">
+                  <Link to="/dashboard" className="flex items-center gap-2 text-lg font-medium">
+                    <BarChart2 className="h-5 w-5" />
+                    Dashboard
+                  </Link>
+                  <Link to="/trade" className="flex items-center gap-2 text-lg font-medium">
+                    <DollarSign className="h-5 w-5" />
+                    Trade
+                  </Link>
+                  <Link to="/funds" className="flex items-center gap-2 text-lg font-medium">
+                    <BookOpen className="h-5 w-5" />
+                    Funds
+                  </Link>
+                </nav>
+              </SheetContent>
+            </Sheet>
+            
+            <div className="ml-auto hidden gap-4 md:flex">
+              <Link to="/dashboard">
+                <Button variant="ghost">Dashboard</Button>
               </Link>
-              <Link to="/trade" className="flex items-center gap-2 text-lg font-medium">
-                <DollarSign className="h-5 w-5" />
-                Trade
+              <Link to="/trade">
+                <Button variant="ghost">Trade</Button>
               </Link>
-              <Link to="/funds" className="flex items-center gap-2 text-lg font-medium">
-                <BookOpen className="h-5 w-5" />
-                Funds
+              <Link to="/funds">
+                <Button variant="ghost">Funds</Button>
               </Link>
-            </nav>
-          </SheetContent>
-        </Sheet>
-        
-        <div className="ml-auto hidden gap-4 md:flex">
-          <Link to="/dashboard">
-            <Button variant="ghost">Dashboard</Button>
-          </Link>
-          <Link to="/trade">
-            <Button variant="ghost">Trade</Button>
-          </Link>
-          <Link to="/funds">
-            <Button variant="ghost">Funds</Button>
-          </Link>
-        </div>
-        
-        <div className="ml-4 flex items-center gap-4">
-          <div className="flex items-center space-x-2">
-            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Switch
-              checked={theme === 'dark'}
-              onCheckedChange={toggleTheme}
-              aria-label="Toggle theme"
-            />
-            <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            </div>
+            
+            <div className="ml-4 flex items-center gap-4">
+              <ThemeToggle />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="rounded-full">
+                    <User className="h-5 w-5" />
+                    <span className="sr-only">Open user menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <Link to="/profile">
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                  </Link>
+                  <Link to="/settings">
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                  </Link>
+                  <Link to="/portfolio">
+                    <DropdownMenuItem>Portfolio</DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Log out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </>
+        ) : (
+          <div className="ml-auto flex items-center gap-4">
+            <ThemeToggle />
+            <Link to="/login">
+              <Button variant="ghost">Login</Button>
+            </Link>
+            <Link to="/signup">
+              <Button>Sign Up</Button>
+            </Link>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <User className="h-5 w-5" />
-                <span className="sr-only">Open user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <Link to="/profile">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-              </Link>
-              <Link to="/settings">
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-              </Link>
-              <Link to="/portfolio">
-                <DropdownMenuItem>Portfolio</DropdownMenuItem>
-              </Link>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Log out</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        )}
       </div>
     </header>
   );

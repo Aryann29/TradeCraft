@@ -1,44 +1,60 @@
-import { Link } from "react-router-dom"
-
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { BarChart2, BookOpen, DollarSign } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
     return (
-        <div>
-            <footer className="bg-gray-800 text-white py-6">
+        <footer className="border-t bg-background">
+            <div className="container mx-auto py-6 px-4">
+                <div className="flex flex-col md:flex-row justify-between items-center">
+                    <Link to="/" className="flex items-center gap-2 font-semibold mb-4 md:mb-0">
+                        <BarChart2 className="h-6 w-6" />
+                        <span>TradeCraft</span>
+                    </Link>
 
-
-
-                <div className="container mx-auto flex-col gap-4 md:flex-row lg:flex-row flex justify-between items-center">
-
-
-
-                    <div className="left flex items-center gap-3">
-                        <svg stroke="currentColor" fill="currentColor" viewBox="0 0 448 512" height="30px" width="30px" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 96h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H368c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48z"></path>
-                        </svg>
-                        <h1 className="text-xl font-bold">TradeCraft</h1>
-                    </div>
-
-
-
-                    <div className="right flex gap-4">
-                        <Link to="/Dashboard" className="hover:text-gray-400">Dashboard</Link>
-                        <Link to="/Trade" className="hover:text-gray-400">Trade</Link>
-                        <Link to="/Funds" className="hover:text-gray-400">Funds</Link>
-                    </div>
-
-
-
+                    {isLoggedIn ? (
+                        <nav className="flex flex-wrap justify-center gap-4">
+                            <Link to="/dashboard">
+                                <Button variant="ghost" className="flex items-center gap-2">
+                                    <BarChart2 className="h-5 w-5" />
+                                    Dashboard
+                                </Button>
+                            </Link>
+                            <Link to="/trade">
+                                <Button variant="ghost" className="flex items-center gap-2">
+                                    <DollarSign className="h-5 w-5" />
+                                    Trade
+                                </Button>
+                            </Link>
+                            <Link to="/funds">
+                                <Button variant="ghost" className="flex items-center gap-2">
+                                    <BookOpen className="h-5 w-5" />
+                                    Funds
+                                </Button>
+                            </Link>
+                        </nav>
+                    ) : (
+                        <nav className="flex flex-wrap justify-center gap-4">
+                            <Link to="/login">
+                                <Button variant="ghost">Login</Button>
+                            </Link>
+                            <Link to="/signup">
+                                <Button variant="ghost">Sign Up</Button>
+                            </Link>
+                        </nav>
+                    )}
                 </div>
 
-
-
-                <div className="text-center mt-4">
+                <div className="text-center mt-6 text-sm text-muted-foreground">
                     <p>&copy; {new Date().getFullYear()} TradeCraft. All rights reserved.</p>
                 </div>
-            </footer>
-        </div>
-    )
-}
+            </div>
+        </footer>
+    );
+};
 
-export default Footer
+export default Footer;
