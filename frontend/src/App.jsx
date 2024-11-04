@@ -12,6 +12,7 @@ import { fetchStocks } from './redux/features/stocks/stocksSlice';
 import { fetchUserPortfolio } from './redux/features/userPortfolio/userPortfolioSlice';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import StockPage from './pages/StockPage';
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -36,7 +37,7 @@ function App() {
               element={!isLoggedIn ? <LoginPage /> : <Navigate to="/" replace />}
             />
             <Route
-              path="/register"
+              path="/signup"
               element={!isLoggedIn ? <RegisterPage /> : <Navigate to="/" replace />}
             />
             <Route
@@ -50,6 +51,10 @@ function App() {
             <Route
               path="/trade"
               element={isLoggedIn ? <Trade /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/stock/:ticker"
+              element={isLoggedIn ? <StockPage /> : <Navigate to="/login" replace />}
             />
           </Routes>
         </main>

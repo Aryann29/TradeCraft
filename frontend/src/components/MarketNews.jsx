@@ -15,35 +15,39 @@ export default function MarketNews() {
   }, [status, dispatch]);
 
   if (status === 'loading') {
-    return <div>Loading news...</div>;
+    return <div className="text-neutral-900 dark:text-neutral-100">Loading news...</div>;
   }
 
   if (status === 'failed') {
-    return <div>Error: {error}</div>;
+    return <div className="text-red-600 dark:text-red-400">Error: {error}</div>;
   }
 
   return (
-    <Card>
+    <Card className="border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
       <CardHeader>
-        <CardTitle>Market News</CardTitle>
-        <CardDescription>Latest updates</CardDescription>
+        <CardTitle className="text-neutral-900 dark:text-neutral-100">Market News</CardTitle>
+        <CardDescription className="text-neutral-600 dark:text-neutral-400">Latest updates</CardDescription>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[400px]">
           <div className="space-y-4">
             {news.length > 0 ? (
               news.map((item, index) => (
-                <Card key={index}>
+                <Card key={index} className="border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
                   <CardHeader className="py-2">
-                    <CardTitle className="text-sm font-medium">{item.title}</CardTitle>
+                    <CardTitle className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                      {item.title}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-xs text-muted-foreground">Source: {item.source}</p>
+                    <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                      Source: {item.source}
+                    </p>
                   </CardContent>
                 </Card>
               ))
             ) : (
-              <p>No news available at the moment.</p>
+              <p className="text-neutral-600 dark:text-neutral-400">No news available at the moment.</p>
             )}
           </div>
         </ScrollArea>

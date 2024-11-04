@@ -14,31 +14,37 @@ export default function PortfolioOverview() {
   }, [status, dispatch]);
 
   if (status === 'loading') {
-    return <div>Loading portfolio...</div>;
+    return <div className="text-neutral-900 dark:text-neutral-100">Loading portfolio...</div>;
   }
 
   if (status === 'failed') {
-    return <div>Error: {error}</div>;
+    return <div className="text-red-600 dark:text-red-400">Error: {error}</div>;
   }
 
   if (!data) {
-    return <div>No portfolio data available.</div>;
+    return <div className="text-neutral-600 dark:text-neutral-400">No portfolio data available.</div>;
   }
 
   return (
-    <Card>
+    <Card className="border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
       <CardHeader>
-        <CardTitle>Portfolio Overview</CardTitle>
+        <CardTitle className="text-neutral-900 dark:text-neutral-100">Portfolio Overview</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
           <div>
-            <p className="text-sm font-medium">Total Value</p>
-            <p className="text-2xl font-bold">₹{data.totalValue.toLocaleString()}</p>
+            <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">Total Value</p>
+            <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+              ₹{data.totalValue.toLocaleString()}
+            </p>
           </div>
           <div>
-            <p className="text-sm font-medium">Today's Change</p>
-            <p className={`text-lg font-semibold ${data.todayChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">Today's Change</p>
+            <p className={`text-lg font-semibold ${
+              data.todayChange >= 0 
+                ? 'text-green-600 dark:text-green-400' 
+                : 'text-red-600 dark:text-red-400'
+            }`}>
               ₹{data.todayChange.toLocaleString()} ({data.todayChangePercentage}%)
             </p>
           </div>

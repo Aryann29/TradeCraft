@@ -3,7 +3,7 @@ import PortfolioOverview from '@/components/PortfolioOverview';
 import TopMovers from '@/components/TopMovers';
 import MarketNews from '@/components/MarketNews';
 import Watchlist from '@/components/Watchlist';
-// Mock data for stocks (unchanged)
+
 const stocks = [
   { symbol: "RELIANCE", name: "Reliance Industries", change: 1.5 },
   { symbol: "TCS", name: "Tata Consultancy Services", change: -0.8 },
@@ -17,14 +17,12 @@ const stocks = [
   { symbol: "LT", name: "Larsen & Toubro", change: 1.7 },
 ]
 
-// Mock data for user holdings (unchanged)
 const userHoldings = {
   totalValue: 250000,
   todayChange: 3500,
   todayChangePercentage: 1.4,
 }
 
-// Mock data for news (unchanged)
 const news = [
   { title: "Reliance Industries announces new green energy initiative", source: "Economic Times" },
   { title: "TCS wins major contract with European bank", source: "Business Standard" },
@@ -35,20 +33,21 @@ const news = [
 
 export default function HomePage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-    <h1 className="text-3xl font-bold mb-6">Welcome, Trader!</h1>
-    <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4">
-      {/* Main content area */}
-      <div className="md:col-span-2 lg:col-span-3 space-y-6">
-        <PortfolioOverview />
-        <TopMovers />
-      </div>
+    <div className=" mx-auto px-4 py-8 bg-white dark:bg-neutral-900">
+      <h1 className="text-3xl font-bold mb-6 text-neutral-900 dark:text-neutral-100">Welcome, Trader!</h1>
+      <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4">
+        {/* Main content area */}
+        <div className="md:col-span-2 lg:col-span-3 space-y-6">
+          <PortfolioOverview />
+          <TopMovers />
+        </div>
 
-      {/* Sidebar */}
-      <div className="md:col-span-1 space-y-6">
-        <MarketNews />
-        <Watchlist />
+        {/* Sidebar */}
+        <div className="md:col-span-1 space-y-6">
+          <MarketNews />
+          <Watchlist />
+        </div>
       </div>
     </div>
-  </div>)
+  );
 }
