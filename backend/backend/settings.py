@@ -27,7 +27,11 @@ SECRET_KEY = "django-insecure-e*04f55b@7e9^9mzhi7v&k&rks3!%-5ev5-vy^b^jovrkob8=3
 DEBUG = False
 
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "http://localhost:5173",  # Local development
+    "http://127.0.0.1:5173",  # Local development
+    "https://trade-craft-frontend.vercel.app",  # Production frontend
+]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Local development
